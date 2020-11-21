@@ -1,8 +1,11 @@
 package id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.dao
 
+import android.content.ContentValues
+import android.database.Cursor
 import androidx.room.*
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.entity.Person
 import kotlinx.coroutines.flow.Flow
+
 
 @Dao
 interface PersonDao {
@@ -22,4 +25,20 @@ interface PersonDao {
     @Transaction
     @Delete
     suspend fun delete(person: Person)
+
+    @Transaction
+    @Query("DELETE FROM person WHERE id = :id ")
+    fun deleteById(id: Int) : Int
+
+    @androidx.room.Transaction
+    @Query("SELECT * FROM person")
+    fun getAllPersonCursor(): Cursor
+
+    @Transaction
+    @Update
+    fun updateContentProvider(person: Person?): Int
+
+    @Transaction
+    @Insert
+    fun insertContentProvider(person: Person?): Long
 }

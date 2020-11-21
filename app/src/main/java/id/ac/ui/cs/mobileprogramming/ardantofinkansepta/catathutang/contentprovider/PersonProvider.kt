@@ -8,22 +8,21 @@ import android.database.Cursor
 import android.net.Uri
 import androidx.annotation.Nullable
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.dao.PersonDao
-import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.dao.TransactionDao
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.database.MainRoomDatabase
-import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.entity.Transaction
+import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.entity.Person
 
-/**
-class TransactionProvider : ContentProvider() {
-    private var transactionDao: TransactionDao? = null
+
+class PersonProvider : ContentProvider() {
+    private var personDao: PersonDao? = null
 
     companion object {
-        val TAG = TransactionProvider::class.java.name
+        val TAG = PersonProvider::class.java.name
 
         /**
          * Authority of this content provider
          */
-        const val AUTHORITY = "id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.contentprovider.transactionprovider"
-        const val TRANSACTION_TABLE_NAME = "transaction"
+        const val AUTHORITY = "id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.contentprovider.personprovider"
+        const val TRANSACTION_TABLE_NAME = "person"
 
         /**
          * The match code for some items in the Person table
@@ -47,7 +46,7 @@ class TransactionProvider : ContentProvider() {
     }
 
     override fun onCreate(): Boolean {
-        transactionDao = context?.let { MainRoomDatabase.getDatabase(it).transactionDao() }
+        personDao = context?.let { MainRoomDatabase.getDatabase(it).personDao() }
         return false
     }
 
@@ -60,10 +59,10 @@ class TransactionProvider : ContentProvider() {
         val cursor: Cursor
         when (uriMatcher.match(uri)) {
             ID_PERSON_DATA -> {
-                cursor = transactionDao!!.getAllTransactionCursor()
+                cursor = personDao!!.getAllPersonCursor()
                 if (context != null) {
                     cursor.setNotificationUri(context!!
-                            .getContentResolver(), uri)
+                            .contentResolver, uri)
                     return cursor
                 }
                 throw IllegalArgumentException("Unknown URI: $uri")
@@ -83,7 +82,10 @@ class TransactionProvider : ContentProvider() {
         when (uriMatcher.match(uri)) {
             ID_PERSON_DATA -> {
                 if (context != null) {
-                    val id: Long = transactionDao!!.insert(Transaction.fromContentValues(values))
+                    val id: Long = personDao!!.insertContentProvider(Person(values!!.getAsInteger("userId"),
+                            values!!.getAsString("name"),
+                            values!!.getAsInteger("initialValue"),
+                            values!!.getAsInteger("value")))
                     if (id != 0L) {
                         context!!.contentResolver
                                 .notifyChange(uri, null)
@@ -104,8 +106,7 @@ class TransactionProvider : ContentProvider() {
             ID_PERSON_DATA -> throw IllegalArgumentException("Invalid uri: cannot delete")
             ID_PERSON_DATA_ITEM -> {
                 if (context != null) {
-                    val count: Int = transactionDao
-                            .delete(ContentUris.parseId(uri))
+                    val count: Int = personDao!!.deleteById(ContentUris.parseId(uri).toInt())
                     context!!.contentResolver
                             .notifyChange(uri, null)
                     return count
@@ -123,8 +124,11 @@ class TransactionProvider : ContentProvider() {
         when (uriMatcher.match(uri)) {
             ID_PERSON_DATA -> {
                 if (context != null) {
-                    val count: Int = transactionDao
-                            .update(Transaction.fromContentValues(values))
+                    val count: Int = personDao!!
+                            .updateContentProvider(Person(values!!.getAsInteger("userId"),
+                                    values!!.getAsString("name"),
+                            values!!.getAsInteger("initialValue"),
+                            values!!.getAsInteger("value")))
                     if (count != 0) {
                         context!!.contentResolver
                                 .notifyChange(uri, null)
@@ -138,4 +142,3 @@ class TransactionProvider : ContentProvider() {
         }
     }
 }
-        */

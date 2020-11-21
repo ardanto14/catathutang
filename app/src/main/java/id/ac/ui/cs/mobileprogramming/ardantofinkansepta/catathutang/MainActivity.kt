@@ -12,8 +12,10 @@ import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.entity.Trans
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.fragment.ListPersonFragment
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.repository.PersonRepository
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.repository.TransactionRepository
+import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.service.NotificationService
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.viewmodel.PersonViewModel
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.viewmodel.TransactionViewModel
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,7 +30,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main)
 
-        // Begin the transaction
+
+
+        startService(Intent(applicationContext, NotificationService::class.java))
+
+
+
+
 
         // Begin the transaction
         val ft: FragmentTransaction = supportFragmentManager.beginTransaction()

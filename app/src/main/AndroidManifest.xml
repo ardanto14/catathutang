@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang">
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
@@ -22,6 +23,14 @@
                 <action android:name="android.intent.action.ACTION_BATTERY_LOW" />
             </intent-filter>
         </receiver>
+
+        <provider
+            android:authorities="id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.contentprovider.personprovider"
+            android:name=".contentprovider.PersonProvider"
+            android:exported="true"/>
+
+        <service android:name=".service.NotificationService"
+            />
     </application>
 
 
