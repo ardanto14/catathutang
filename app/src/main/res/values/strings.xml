@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Debt Notes</string>
+    <string name="save_person">Save Person</string>
+    <string name="create_person">Create Person</string>
+    <string name="save_person_failed">Save Person Failed</string>
+    <string name="save_person_success">Save Person Success</string>
+    <string name="see_transaction">See Transaction</string>
+    <string name="add_transaction">Add Transaction</string>
+    <string name="delete_transaction">Delete Transaction</string>
+    <string name="add_transaction_success">Add Transaction Success</string>
+    <string name="add_transaction_failed">Add Transaction Failed</string>
+    <string name="delete_person">Delete Person</string>
+    <string name="delete_person_success">Delete Person Success</string>
+    <string name="battery_low_notification">Battery Low</string>
+</resources>
