@@ -7,6 +7,7 @@
     <string name="see_transaction">See Transaction</string>
     <string name="add_transaction">Add Transaction</string>
     <string name="delete_transaction">Delete Transaction</string>
+    <string name="delete_transaction_success">Delete Transaction Success</string>
     <string name="add_transaction_success">Add Transaction Success</string>
     <string name="add_transaction_failed">Add Transaction Failed</string>
     <string name="delete_person">Delete Person</string>

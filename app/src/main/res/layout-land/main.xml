@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <FrameLayout
+        android:id="@+id/placeholder"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+    </FrameLayout>
+
+    <fragment
+        android:id="@+id/placeholder2"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:name="id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.fragment.CreatePersonFragment">
+    </fragment>
+
+</LinearLayout>

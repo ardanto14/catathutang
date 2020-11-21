@@ -1,6 +1,5 @@
 package id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.adapter
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,7 +67,7 @@ class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.ViewHolder>()
 
             Toast.makeText(
                 it.context,
-                R.string.delete_person_success,
+                R.string.delete_transaction_success,
                 Toast.LENGTH_LONG
             ).show()
 

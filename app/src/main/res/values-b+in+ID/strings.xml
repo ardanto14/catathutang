@@ -9,6 +9,7 @@
     <string name="add_transaction">Buat Transaksi</string>
     <string name="delete_transaction">Hapus Transaksi</string>
     <string name="add_transaction_success">Sukses Menambahkan Transaksi</string>
+    <string name="delete_transaction_success">Sukses Menghapus Transaksi</string>
     <string name="add_transaction_failed">Gagal Menambahkan Transaksi</string>
     <string name="delete_person">Hapus Orang</string>
     <string name="delete_person_success">Hapus Orang Berhasil</string>

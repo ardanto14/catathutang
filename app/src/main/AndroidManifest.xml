@@ -17,15 +17,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".CreatePersonActivity">
-        </activity>
-
-        <activity android:name=".CreateTransactionActivity">
-        </activity>
-
-        <activity android:name=".ListTransactionActivity">
-        </activity>
-
         <receiver android:name=".broadcastreceiver.BatteryLowBroadcastReceiver"  android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_BATTERY_LOW" />

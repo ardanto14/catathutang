@@ -2,23 +2,28 @@ package id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.adapter
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.*
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.database.MainRoomDatabase
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.entity.Person
+import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.fragment.CreatePersonFragment
+import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.fragment.CreateTransactionFragment
+import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.fragment.ListTransactionFragment
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.repository.PersonRepository
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.viewmodel.PersonViewModel
 
 
 // Create the basic adapter extending from RecyclerView.Adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
-class PersonAdapter(private val activity: Activity) : RecyclerView.Adapter<PersonAdapter.ViewHolder>() {
+class PersonAdapter(private val activity: FragmentActivity) : RecyclerView.Adapter<PersonAdapter.ViewHolder>() {
 
     private var personList: List<Person> = ArrayList()
 
@@ -68,6 +73,7 @@ class PersonAdapter(private val activity: Activity) : RecyclerView.Adapter<Perso
 
             personViewModel.delete(removedItem)
 
+
             notifyItemRemoved(position);
 
             Toast.makeText(
@@ -79,15 +85,30 @@ class PersonAdapter(private val activity: Activity) : RecyclerView.Adapter<Perso
         }
 
         addTransactionButton.setOnClickListener {
-            val intent = Intent(activity, CreateTransactionActivity::class.java)
-            intent.putExtra("userId", person.id)
-            activity.startActivityForResult(intent, RequestCode.NEW_TRANSACTION_ACTIVITY_REQUEST_CODE)
+            val newFragment = CreateTransactionFragment()
+
+            val bundle = Bundle()
+            bundle.putInt("userId", person.id);
+            newFragment.arguments = bundle
+
+            activity!!.supportFragmentManager.beginTransaction()
+                    .replace(R.id.placeholder, newFragment)
+                    .addToBackStack(null)
+                    .commit();
+
         }
 
         seeTransactionButton.setOnClickListener {
-            val intent = Intent(activity, ListTransactionActivity::class.java)
-            intent.putExtra("userId", person.id)
-            activity.startActivity(intent)
+            val newFragment = ListTransactionFragment()
+
+            val bundle = Bundle()
+            bundle.putInt("userId", person.id);
+            newFragment.arguments = bundle
+
+            activity!!.supportFragmentManager.beginTransaction()
+                    .replace(R.id.placeholder, newFragment)
+                    .addToBackStack(null)
+                    .commit();
         }
 
     }

@@ -2,25 +2,19 @@ package id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang
 
 import android.app.Activity
 import android.content.Intent
-import android.content.IntentFilter
-import android.net.ConnectivityManager
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.adapter.PersonAdapter
-import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.broadcastreceiver.BatteryLowBroadcastReceiver
+import androidx.fragment.app.FragmentTransaction
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.database.MainRoomDatabase
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.entity.Person
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.entity.Transaction
+import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.fragment.ListPersonFragment
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.repository.PersonRepository
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.repository.TransactionRepository
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.viewmodel.PersonViewModel
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.viewmodel.TransactionViewModel
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,36 +26,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.main)
 
-        
-        val button = findViewById<Button>(R.id.create_person)
-        button.setOnClickListener {
-            val intent = Intent(this, CreatePersonActivity::class.java)
-            startActivityForResult(intent, RequestCode.NEW_PERSON_ACTIVITY_REQUEST_CODE)
-        }
+        // Begin the transaction
 
-        // Lookup the recyclerview in activity layout
-        val personLists = findViewById<View>(R.id.person_list) as RecyclerView
-        // Create adapter passing in the sample user data
-        val adapter = PersonAdapter(this)
-        // Attach the adapter to the recyclerview to populate items
-        personLists.adapter = adapter
-        // Set layout manager to position the items
-        personLists.layoutManager = LinearLayoutManager(this)
-        // That's all!
+        // Begin the transaction
+        val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
 
-        personViewModel.allPerson.observe(this, Observer { persons ->
-            // Update the cached copy of the words in the adapter.
-            persons.let { adapter.setAllPerson(it) }
-        })
+        ft.replace(R.id.placeholder, ListPersonFragment())
 
-        val br: BatteryLowBroadcastReceiver = BatteryLowBroadcastReceiver()
-
-        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION).apply {
-            addAction(Intent.ACTION_BATTERY_LOW)
-        }
-        registerReceiver(br, filter)
+        ft.commit()
 
     }
 
@@ -113,6 +87,32 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    fun newPerson(name: String, initialValue: Int, value: Int) {
+
+        val person = Person(name= name, initialValue = initialValue, value = value)
+        personViewModel.insert(person)
+
+        Toast.makeText(
+                applicationContext,
+                R.string.save_person_success,
+                Toast.LENGTH_LONG
+        ).show()
+
+    }
+
+    fun newTransaction(note: String, value: Int, userId: Int) {
+
+        val newTransaction = Transaction(note=note, value=value, userId=userId)
+
+        transactionViewModel.insert(newTransaction)
+
+        Toast.makeText(
+                applicationContext,
+                R.string.add_transaction_success,
+                Toast.LENGTH_LONG
+        ).show()
     }
 
 }

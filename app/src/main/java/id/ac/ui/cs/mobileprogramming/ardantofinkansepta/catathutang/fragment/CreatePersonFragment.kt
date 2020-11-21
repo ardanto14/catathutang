@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.MainActivity
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.R
 
 
@@ -23,6 +24,7 @@ class CreatePersonFragment : Fragment() {
         var initialValueEditText = mView.findViewById(R.id.initial_value) as EditText
 
         val button = mView.findViewById<Button>(R.id.save_person)
+
         button.setOnClickListener {
 
 
@@ -34,12 +36,13 @@ class CreatePersonFragment : Fragment() {
             hashMap["initialValue"] = initialValue
             hashMap["value"] = initialValue
 
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("data", hashMap)
-            setResult(Activity.RESULT_OK, intent)
 
-            finish()
+            val act: MainActivity = (activity as MainActivity?)!!
+            act.newPerson(name, initialValue, initialValue)
+            activity!!.supportFragmentManager.popBackStack()
+
         }
+
 
         return mView
     }
