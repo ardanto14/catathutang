@@ -14,4 +14,9 @@
     <string name="delete_person">Hapus Orang</string>
     <string name="delete_person_success">Hapus Orang Berhasil</string>
     <string name="battery_low_notification">Baterai Lemah</string>
+    <string name="about">Tentang</string>
+    <string name="import_contact">Impor Kontak</string>
+    <string name="denied_permission">Izin untuk mengakses contact bertujuan untuk mengimpor contact menjadi Orang. Jika tidak ada izin, maka aplikasi tidak bisa melakukannya.</string>
+    <string name="backup">Backup</string>
+    <string name="check_connection">Cek Koneksi</string>
 </resources>

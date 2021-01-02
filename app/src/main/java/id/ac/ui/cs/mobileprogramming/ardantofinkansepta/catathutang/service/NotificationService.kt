@@ -5,12 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
-import android.util.Log
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.MainActivity
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.R
 import java.util.*
 

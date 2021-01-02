@@ -2,6 +2,7 @@ package id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.database.MainRoomDatabase
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.entity.Person
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.entity.Transaction
+import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.fragment.DeniedPermissionFragment
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.fragment.ListPersonFragment
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.repository.PersonRepository
 import id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang.repository.TransactionRepository
@@ -26,6 +28,10 @@ class MainActivity : AppCompatActivity() {
     private val personViewModel by lazy { PersonViewModel(personRepository) }
     private val transactionViewModel by lazy { TransactionViewModel(transactionRepository, personRepository) }
 
+    init {
+        System.loadLibrary("native-lib")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main)
@@ -33,6 +39,8 @@ class MainActivity : AppCompatActivity() {
 
 
         startService(Intent(applicationContext, NotificationService::class.java))
+
+        Toast.makeText(this, stringFromJNI(), Toast.LENGTH_SHORT).show()
 
 
 
@@ -95,6 +103,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
     }
 
     fun newPerson(name: String, initialValue: Int, value: Int) {
@@ -122,5 +131,37 @@ class MainActivity : AppCompatActivity() {
                 Toast.LENGTH_LONG
         ).show()
     }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super
+            .onRequestPermissionsResult(
+                requestCode,
+                permissions,
+                grantResults
+            )
+
+        if (requestCode == RequestCode.READ_CONTACT_REQUEST_CODE) {
+            if ((grantResults.isNotEmpty() &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                Toast.makeText(this, "Thanks for Granting permission, now you can Import Contact", Toast.LENGTH_SHORT).show()
+            } else {
+                val newFragment = DeniedPermissionFragment()
+
+                this.supportFragmentManager.beginTransaction()
+                    .replace(R.id.placeholder, newFragment)
+                    .addToBackStack(null)
+                    .commit();
+            }
+        }
+    }
+
+    external fun stringFromJNI(): String?
+
+
 
 }

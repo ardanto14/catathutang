@@ -9,6 +9,13 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
+    externalNativeBuild {
+        cmake {
+            version "3.10.2"
+            path file('CMakeLists.txt')
+        }
+    }
+
     defaultConfig {
         applicationId "id.ac.ui.cs.mobileprogramming.ardantofinkansepta.catathutang"
         minSdkVersion 23
@@ -18,6 +25,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    ndkVersion '21.0.6113669'
 
     buildTypes {
         release {
@@ -61,5 +70,9 @@ dependencies {
 
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
-    implementation "com.android.support:support-compat:28.0.0"
+    // implementation "com.android.support:support-compat:28.0.0"
+
+    implementation "com.google.android.gms:play-services-auth:19.0.0"
+    implementation 'com.android.volley:volley:1.1.1'
+
 }

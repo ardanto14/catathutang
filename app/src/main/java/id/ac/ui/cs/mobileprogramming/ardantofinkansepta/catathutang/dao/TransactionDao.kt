@@ -15,6 +15,10 @@ interface TransactionDao {
     fun getAllTransaction(): Flow<List<Transaction>>
 
     @androidx.room.Transaction
+    @Query("SELECT * FROM `transaction`")
+    fun getAllTransactionList(): List<Transaction>
+
+    @androidx.room.Transaction
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(transaction: Transaction)
 

@@ -13,4 +13,9 @@
     <string name="delete_person">Delete Person</string>
     <string name="delete_person_success">Delete Person Success</string>
     <string name="battery_low_notification">Battery Low</string>
+    <string name="about">About</string>
+    <string name="import_contact">Import Contact</string>
+    <string name="denied_permission">Permission to Access Contact used for Converting Phone Contact to Person Data. If it\'s not granted, then you can\'t use this feature.</string>
+    <string name="backup">Backup</string>
+    <string name="check_connection">Check Connection</string>
 </resources>

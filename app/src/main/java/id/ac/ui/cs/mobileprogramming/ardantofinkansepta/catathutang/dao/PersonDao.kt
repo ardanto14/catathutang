@@ -15,6 +15,10 @@ interface PersonDao {
     fun getAllPerson(): Flow<List<Person>>
 
     @Transaction
+    @Query("SELECT * FROM person")
+    fun getAllPersonList(): List<Person>
+
+    @Transaction
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(person: Person)
 

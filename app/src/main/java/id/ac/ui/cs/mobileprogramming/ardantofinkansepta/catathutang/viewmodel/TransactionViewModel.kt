@@ -18,6 +18,10 @@ class TransactionViewModel(private val repository: TransactionRepository, privat
     /**
      * Launching a new coroutine to insert the data in a non-blocking way
      */
+    val allTransaction: LiveData<List<Transaction>> = repository.allTransaction.asLiveData()
+
+
+
     fun insert(transaction: Transaction) = viewModelScope.launch {
 
         repository.insert(transaction)
